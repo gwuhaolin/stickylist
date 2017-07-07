@@ -5,6 +5,12 @@
 # StickyList
 React sticky header listview component
 
+<p align="center">
+  <a href="https://gwuhaolin.github.io/redemo/">
+    <img alt="redemo" src="./stickylist.gif" width="600">
+  </a>
+</p>
+
 - easy to use
 - high performance
 - scalable and custom styles
