@@ -7,7 +7,7 @@ React sticky header listview component
 
 <p align="center">
   <a href="https://gwuhaolin.github.io/redemo/">
-    <img alt="redemo" src="./stickylist.gif" width="600">
+    <img alt="redemo" src="./stickylist.gif" width="400">
   </a>
 </p>
 
