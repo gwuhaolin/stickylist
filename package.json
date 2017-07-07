@@ -1,0 +1,53 @@
+{
+  "name": "stickylist",
+  "version": "1.0.0",
+  "description": "react sticky header listview",
+  "keywords": [
+    "react",
+    "sticky",
+    "header",
+    "listview"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gwuhaolin/stickylist.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --hot --open",
+    "doc:pub": "NODE_ENV=production webpack --config webpack-dist.config.js && rm -rf .doc",
+    "npm:js": "BABEL_ENV=dist babel src/ --out-dir .npm/ --source-maps",
+    "npm:pub": "npm run npm:scss && npm run npm:js && cp ./package.json .npm/ && cp -R ./src/iconfont ./.npm/iconfont && npm publish .npm/ && rm -rf .npm"
+  },
+  "author": "gwuhaolin",
+  "license": "ISC",
+  "dependencies": {
+    "babel-runtime": "^6.23.0",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-import": "^1.2.1",
+    "babel-plugin-replace-require-suffix": "^1.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "docgen-loader": "^1.3.4",
+    "end-webpack-plugin": "^1.0.0",
+    "file-loader": "^0.11.2",
+    "gh-pages": "^1.0.0",
+    "react-docgen": "^3.0.0-beta4",
+    "redemo": "^1.0.9",
+    "style-loader": "^0.18.2",
+    "web-webpack-plugin": "^1.8.4",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
+  }
+}

@@ -1,0 +1,31 @@
+.redemo {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+}
+
+.redemo-run {
+  height: 400px;
+}
+
+.sl-wrap {
+  border: 1px solid #999;
+}
+
+.sl-group {
+}
+
+.sl-header {
+  width: 100%;
+  background-color: #ddd;
+  padding: 5px;
+}
+
+.sl-items {
+
+}
+
+.sl-item {
+  border-bottom: 1px solid #eee;
+  padding: 5px;
+}
