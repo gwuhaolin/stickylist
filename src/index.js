@@ -62,6 +62,7 @@ export default class StickyList extends PureComponent {
 
   componentDidMount() {
     this.listenScroll();
+    this.stickyFirstHeader();
   }
 
   componentWillUnmount() {
@@ -82,6 +83,7 @@ export default class StickyList extends PureComponent {
 
   componentDidUpdate() {
     this.listenScroll();
+    this.stickyFirstHeader();
   }
 
   listenScroll = () => {
@@ -90,6 +92,14 @@ export default class StickyList extends PureComponent {
 
   unlistenScroll = () => {
     this.$wrap.onscroll = null;
+  }
+
+  stickyFirstHeader = () => {
+    const stickyGroup = this.groupMap[0];
+    Object.assign(stickyGroup.$header.style, {
+      position: 'absolute',
+      top: 0,
+    });
   }
 
   onScroll = () => {
