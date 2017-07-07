@@ -29,7 +29,9 @@ const DATA = [
 <StickyList data={DATA}/>
 ```
 
-notice that `key` in data is for improve performance, if not provide will use index as key.
+Notice that `key` in data is for improve performance, if not provide will use index as key.
+
+See a [live demo](https://gwuhaolin.github.io/stickylist/) and it's [source code](https://github.com/gwuhaolin/stickylist/blob/master/src/doc/index.js).
 
 ### Custom styles
 StickyList's HTML struts in className:

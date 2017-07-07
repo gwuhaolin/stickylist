@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Group from './Group';
 
@@ -62,7 +61,7 @@ export default class StickyList extends PureComponent {
   }
 
   groupMap = {};
-  stickyGroup;
+  stickyIndex;
 
   componentDidMount() {
     this.listenScroll();
@@ -76,7 +75,7 @@ export default class StickyList extends PureComponent {
     const { data } = this.props;
     if (data !== nextProps.data) {
       this.groupMap = {};
-      this.stickyGroup = null;
+      this.stickyIndex = null;
     }
   }
 
@@ -89,11 +88,11 @@ export default class StickyList extends PureComponent {
   }
 
   listenScroll = () => {
-    findDOMNode(this.$wrap).addEventListener('scroll', this.onScroll, false);
+    this.$wrap.onscroll = this.onScroll;
   }
 
   unlistenScroll = () => {
-    findDOMNode(this.$wrap).removeEventListener('scroll', this.onScroll, false);
+    this.$wrap.onscroll = null;
   }
 
   onScroll = () => {
@@ -108,10 +107,11 @@ export default class StickyList extends PureComponent {
       if (sum > wrapScrollTop) {
         $header.style.position = 'absolute';
         $header.style.top = `${wrapScrollTop}px`;
-        if (this.stickyGroup && this.stickyGroup !== group) {
-          this.stickyGroup.$header.style.position = '';
+        const stickyGroup = this.groupMap[this.stickyIndex];
+        if (stickyGroup && stickyGroup !== group) {
+          stickyGroup.$header.style.position = '';
         }
-        this.stickyGroup = group;
+        this.stickyIndex = index;
         return;
       }
     }

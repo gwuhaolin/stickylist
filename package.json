@@ -1,6 +1,6 @@
 {
   "name": "stickylist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react sticky header listview",
   "keywords": [
     "react",
@@ -17,7 +17,7 @@
     "dev": "webpack-dev-server --hot --open",
     "doc:pub": "NODE_ENV=production webpack --config webpack-dist.config.js && rm -rf .doc",
     "npm:js": "BABEL_ENV=dist babel src/ --out-dir .npm/ --source-maps",
-    "npm:pub": "npm run npm:scss && npm run npm:js && cp ./package.json .npm/ && cp -R ./src/iconfont ./.npm/iconfont && npm publish .npm/ && rm -rf .npm"
+    "npm:pub": "npm run npm:js && cp ./package.json .npm/ && npm publish .npm/ && rm -rf .npm"
   },
   "author": "gwuhaolin",
   "license": "ISC",
