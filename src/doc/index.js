@@ -31,7 +31,7 @@ const DATA = [
 <StickyList data={DATA}/>
 `
 
-const data = genData(20);
+const data = genData(40);
 const demo = (
   <Redemo
     title="StickyList"

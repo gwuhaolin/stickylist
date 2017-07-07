@@ -15,7 +15,7 @@ export function genData(dataSize) {
     data.push({
       key: i,
       header: `header${i}`,
-      items: genItems(parseInt(Math.random() * 30))
+      items: genItems(10)
     })
   }
   return data;

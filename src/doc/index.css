@@ -16,8 +16,8 @@
 }
 
 .sl-header {
-  width: 100%;
   background-color: #ddd;
+  box-sizing: border-box;
   padding: 5px;
 }
 
@@ -27,5 +27,6 @@
 
 .sl-item {
   border-bottom: 1px solid #eee;
+  box-sizing: border-box;
   padding: 5px;
 }

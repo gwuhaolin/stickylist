@@ -56,12 +56,9 @@ export default class StickyList extends PureComponent {
     })),
   }
 
-  static defaultProps = {
-    data: [],
-  }
-
   groupMap = {};
-  stickyIndex;
+  stickyIndex = 0;
+  lastWrapScrollTop = 0;
 
   componentDidMount() {
     this.listenScroll();
@@ -75,7 +72,7 @@ export default class StickyList extends PureComponent {
     const { data } = this.props;
     if (data !== nextProps.data) {
       this.groupMap = {};
-      this.stickyIndex = null;
+      this.stickyIndex = 0;
     }
   }
 
@@ -96,30 +93,58 @@ export default class StickyList extends PureComponent {
   }
 
   onScroll = () => {
-    const { groupMap } = this;
-    // update current header positions and apply fixed positions to the top one
+    const { groupMap, stickyIndex, lastWrapScrollTop } = this;
+    const stickyGroup = this.groupMap[this.stickyIndex];
+
     const wrapScrollTop = this.$wrap.scrollTop;
-    let sum = 0;
-    for (const index in groupMap) {
-      const group = groupMap[index];
-      const { $group, $header } = group;
-      sum += $group.clientHeight;
-      if (sum > wrapScrollTop) {
-        $header.style.position = 'absolute';
-        $header.style.top = `${wrapScrollTop}px`;
-        const stickyGroup = this.groupMap[this.stickyIndex];
-        if (stickyGroup && stickyGroup !== group) {
-          stickyGroup.$header.style.position = '';
+    // scroll up or down, true is down false is up
+    const goDown = wrapScrollTop - lastWrapScrollTop > 0;
+    this.lastWrapScrollTop = wrapScrollTop;
+    const checkIndex = goDown ? stickyIndex + 1 : stickyIndex - 1;
+    const nextGroup = groupMap[checkIndex];
+
+    if (nextGroup) {
+      const { $group, $header } = nextGroup;
+      const { offsetTop: groupOffsetTop } = $group;
+
+      const updateToNextSticky = () => {
+        Object.assign($header.style, {
+          position: 'absolute',
+          top: `${wrapScrollTop}px`,
+        })
+
+        if (stickyGroup && stickyGroup !== nextGroup) {
+          Object.assign(stickyGroup.$header.style, {
+            position: '',
+            top: '',
+          })
         }
-        this.stickyIndex = index;
-        return;
+        this.stickyIndex = checkIndex;
+      }
+
+      if (goDown) {
+        if (wrapScrollTop >= groupOffsetTop) {
+          updateToNextSticky();
+          return;
+        }
+      } else {
+        if (wrapScrollTop <= groupOffsetTop) {
+          updateToNextSticky();
+          return;
+        }
       }
     }
+
+    // refresh current stickyGroup
+    Object.assign(stickyGroup.$header.style, {
+      position: 'absolute',
+      top: `${wrapScrollTop}px`,
+    });
   }
 
   render() {
     const { groupMap } = this;
-    const { data, className, style } = this.props
+    const { data = [], className, style } = this.props
 
     return (
       <div
