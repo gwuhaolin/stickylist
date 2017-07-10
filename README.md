@@ -3,13 +3,13 @@
 [![Dependency Status](https://david-dm.org/gwuhaolin/stickylist.svg?style=flat-square)](https://npmjs.org/package/stickylist)
 
 # StickyList
-React sticky header listview component
-
 <p align="center">
   <a href="https://gwuhaolin.github.io/redemo/">
     <img alt="redemo" src="./stickylist.gif" width="400">
   </a>
 </p>
+
+React sticky header listview component
 
 - easy to use
 - high performance
