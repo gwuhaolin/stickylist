@@ -20,7 +20,7 @@ export default class StickyList extends PureComponent {
 
   static propTypes = {
     className: PropTypes.string,
-    style: PropTypes.string,
+    style: PropTypes.object,
     /**
      * data to render
      */
