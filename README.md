@@ -25,11 +25,12 @@ const DATA = [
   {
     header: 'ListA',
     key: 'A',
-    items: [
-      { key:1, display: 'item1'},
-      { key:2, display: 'item2'},
-    ]
-  }
+    items: <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
+  },
+  ...
 ]
 
 <StickyList data={DATA}/>
@@ -46,15 +47,21 @@ StickyList's HTML struts in className:
    .sl-group
        .sl-header
        .sl-items
-           .sl-item
-           .sl-item
-           ...
    .sl-group
        .sl-header
        .sl-items
-           .sl-item
-           .sl-item
-           ...
    ...
 ```
-You can add style to these className to custom styles.
+You can add style to these className to custom styles, e.g:
+```css
+.sl-header {
+  background-color: #ddd;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.sl-item {
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+  padding: 5px;
+}
+```

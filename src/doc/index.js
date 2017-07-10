@@ -20,11 +20,11 @@ import StickyList from 'stickylist';
 const DATA = [
   {
     header: 'ListA',
-    key:'A',
-    items: [
-      { key:1, display: 'item1'},
-      { key:2, display: 'item2'},
-    ]
+    key: 'A',
+    items: <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
   }
 ]
 

@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Group from './Group';
 
 /**
  * StickyList - react sticky header listview
@@ -12,15 +11,9 @@ import Group from './Group';
  *    .sl-group
  *        .sl-header
  *        .sl-items
- *            .sl-item
- *            .sl-item
- *            ...
  *    .sl-group
  *        .sl-header
  *        .sl-items
- *            .sl-item
- *            .sl-item
- *            ...
  *    ...
  */
 export default class StickyList extends PureComponent {
@@ -41,22 +34,14 @@ export default class StickyList extends PureComponent {
        */
       header: PropTypes.any,
       /**
-       * data for a group of items
+       * display for a group of items
        */
-      items: PropTypes.arrayOf(PropTypes.shape({
-        /**
-         * key for this group, for improve performance
-         */
-        key: PropTypes.any,
-        /**
-         * display for a item in group
-         */
-        display: PropTypes.any,
-      })),
+      items: PropTypes.any,
     })),
   }
 
-  groupMap = {};
+  headerMap = {};
+  $firstItems;
   stickyIndex = 0;
   lastWrapScrollTop = 0;
 
@@ -72,7 +57,7 @@ export default class StickyList extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const { data } = this.props;
     if (data !== nextProps.data) {
-      this.groupMap = {};
+      this.headerMap = {};
       this.stickyIndex = 0;
     }
   }
@@ -87,49 +72,50 @@ export default class StickyList extends PureComponent {
   }
 
   listenScroll = () => {
-    this.$wrap.onscroll = this.onScroll;
+    this.$wrap.addEventListener('scroll', this.onScroll, false);
   }
 
   unlistenScroll = () => {
-    this.$wrap.onscroll = null;
+    this.$wrap.removeEventListener('scroll', this.onScroll);
   }
 
   stickyFirstHeader = () => {
-    const stickyGroup = this.groupMap[0];
-    Object.assign(stickyGroup.$header.style, {
+    const $stickyHeader = this.headerMap[0];
+    Object.assign($stickyHeader.style, {
       position: 'absolute',
       top: 0,
     });
+    if (this.$firstItems) {
+      this.$firstItems.style.borderTop = `${$stickyHeader.clientHeight}px solid transparent`;
+    }
   }
 
   onScroll = () => {
-    const { groupMap, stickyIndex, lastWrapScrollTop } = this;
-    const stickyGroup = this.groupMap[this.stickyIndex];
+    const { headerMap, stickyIndex, lastWrapScrollTop } = this;
 
     const wrapScrollTop = this.$wrap.scrollTop;
     // scroll up or down, true is down false is up
     const goDown = wrapScrollTop - lastWrapScrollTop > 0;
     this.lastWrapScrollTop = wrapScrollTop;
-    const checkIndex = goDown ? stickyIndex + 1 : stickyIndex - 1;
-    const nextGroup = groupMap[checkIndex];
+    const $stickyHeader = headerMap[stickyIndex];
+    const nextIndex = goDown ? stickyIndex + 1 : stickyIndex - 1;
+    const $nextHeader = headerMap[nextIndex];
 
-    if (nextGroup) {
-      const { $group, $header } = nextGroup;
-      const { offsetTop: groupOffsetTop } = $group;
+    if ($nextHeader) {
+      const { offsetTop: groupOffsetTop } = $nextHeader;
 
       const updateToNextSticky = () => {
-        Object.assign($header.style, {
+        // fix next
+        Object.assign($nextHeader.style, {
           position: 'absolute',
           top: `${wrapScrollTop}px`,
-        })
-
-        if (stickyGroup && stickyGroup !== nextGroup) {
-          Object.assign(stickyGroup.$header.style, {
-            position: '',
-            top: '',
-          })
-        }
-        this.stickyIndex = checkIndex;
+        });
+        // restore pre
+        Object.assign($stickyHeader.style, {
+          position: '',
+          top: '',
+        });
+        this.stickyIndex = nextIndex;
       }
 
       if (goDown) {
@@ -146,14 +132,14 @@ export default class StickyList extends PureComponent {
     }
 
     // refresh current stickyGroup
-    Object.assign(stickyGroup.$header.style, {
+    Object.assign($stickyHeader.style, {
       position: 'absolute',
       top: `${wrapScrollTop}px`,
     });
   }
 
   render() {
-    const { groupMap } = this;
+    const { headerMap } = this;
     const { data = [], className, style } = this.props
 
     return (
@@ -167,14 +153,28 @@ export default class StickyList extends PureComponent {
         ref={$wrap => this.$wrap = $wrap}
       >
         {data.map(({ header, items, key }, index) => (
-          <Group
+          <div
+            className="sl-group"
             key={key !== undefined ? key : index}
-            header={header}
-            items={items}
-            ref={group => {
-              groupMap[index] = group;
-            }}
-          />
+          >
+            <div
+              className="sl-header"
+              style={{
+                width: '100%',
+              }}
+              ref={header => {
+                headerMap[index] = header;
+              }}
+            >{header}</div>
+            <div
+              className="sl-items"
+              ref={items => {
+                if (index === 0) {
+                  this.$firstItems = items;
+                }
+              }}
+            >{items}</div>
+          </div>
         ))}
       </div>
     )
