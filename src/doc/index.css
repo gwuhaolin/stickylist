@@ -5,11 +5,12 @@
 }
 
 .redemo-run {
-  height: 400px;
+  height: 420px;
 }
 
 .sl-wrap {
   border: 1px solid #999;
+  height: 400px;
 }
 
 .sl-header {

@@ -31,7 +31,9 @@ const DATA = [
 <StickyList data={DATA}/>
 `
 
-const data = genData(40);
+const len = 40;
+const data = genData(len);
+let stickyList
 const demo = (
   <Redemo
     title="StickyList"
@@ -42,8 +44,15 @@ const demo = (
     propTypeVisible
   >
     <StickyList
+      ref={c => stickyList = c}
       data={data}
     />
+    <button
+      title="random scroll to index group"
+      onClick={() => {
+        stickyList.scrollTo(parseInt(Math.random() * len));
+      }}>scrollTo
+    </button>
   </Redemo>
 )
 

@@ -38,6 +38,8 @@ const DATA = [
 
 Notice that `key` in data is for improve performance, if not provide will use index as key.
 
+3. instance method `scrollTo(index)` can used to control StickyList scroll to a group by group index. e.g scroll to top(0) and bottom(data.length-1)
+
 See a [live demo](https://gwuhaolin.github.io/stickylist/) and it's [source code](https://github.com/gwuhaolin/stickylist/blob/master/src/doc/index.js).
 
 ### Custom styles
@@ -54,6 +56,9 @@ StickyList's HTML struts in className:
 ```
 You can add style to these className to custom styles, e.g:
 ```css
+.sl-wrap{
+  height: 100px;
+}
 .sl-header {
   background-color: #ddd;
   box-sizing: border-box;
